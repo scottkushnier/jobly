@@ -17,10 +17,10 @@ const { UnauthorizedError } = require("../expressError");
 function authenticateJWT(req, res, next) {
   try {
     const authHeader = req.headers && req.headers.authorization;
-    console.log("auth: ", req.headers.authorization);
+    // console.log("auth: ", req.headers.authorization);
     if (authHeader) {
       const token = authHeader.replace(/^[Bb]earer /, "").trim();
-      console.log("token: ", token);
+      // console.log("token: ", token);
       res.locals.user = jwt.verify(token, SECRET_KEY);
       console.log("res.locals.user: ", res.locals.user);
     }
@@ -46,7 +46,23 @@ function ensureLoggedIn(req, res, next) {
 
 function ensureLoggedInAsAdmin(req, res, next) {
   try {
+    //   console.log("admin?: ", res.locals.user.username, res.locals.user.isAdmin);
     if (!res.locals.user || !res.locals.user.isAdmin)
+      throw new UnauthorizedError();
+    return next();
+  } catch (err) {
+    return next(err);
+  }
+}
+
+// make sure logged-in user matches req or is admin
+function ensureUserRights(req, res, next) {
+  try {
+    if (
+      !res.locals.user ||
+      (!res.locals.user.isAdmin &&
+        res.locals.user.username != req.params.username)
+    )
       throw new UnauthorizedError();
     return next();
   } catch (err) {
@@ -58,4 +74,5 @@ module.exports = {
   authenticateJWT,
   ensureLoggedIn,
   ensureLoggedInAsAdmin,
+  ensureUserRights,
 };
