@@ -22,7 +22,7 @@ function authenticateJWT(req, res, next) {
       const token = authHeader.replace(/^[Bb]earer /, "").trim();
       // console.log("token: ", token);
       res.locals.user = jwt.verify(token, SECRET_KEY);
-      console.log("res.locals.user: ", res.locals.user);
+      // console.log("res.locals.user: ", res.locals.user);
     }
     return next();
   } catch (err) {
@@ -46,7 +46,7 @@ function ensureLoggedIn(req, res, next) {
 
 function ensureLoggedInAsAdmin(req, res, next) {
   try {
-    //   console.log("admin?: ", res.locals.user.username, res.locals.user.isAdmin);
+    // console.log("admin?: ", res.locals.user.username, res.locals.user.isAdmin);
     if (!res.locals.user || !res.locals.user.isAdmin)
       throw new UnauthorizedError();
     return next();
