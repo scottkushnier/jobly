@@ -34,43 +34,31 @@ class Job {
    * Returns [{ id, title, salary, equity, companyHandle }, ...]
    * */
 
-  static async findAll() {
-    // nameFilter = null,
-    // minEmployees = null,
-    // maxEmployees = null
+  // allow user to specify a desired substring in title, minimum salary, and specify whether to filter
+  // only jobs that include market equity in the company
+  static async findAll(titleFilter = null, minSalary = null, hasEquity = null) {
     let whereClause = "";
     let args = [];
-    // let argIndex = 1;
-    // check that Max > Min
-    // if (
-    //   minEmployees != null &&
-    //   maxEmployees != null &&
-    //   maxEmployees < minEmployees
-    // ) {
-    //   throw new BadRequestError(
-    //     `Filter minimum (${minEmployees}) specified is greater than maximum (${maxEmployees})`
-    //   );
-    // }
+    let argIndex = 1;
+
     // build WHERE clause for filtering of results
-    // if (nameFilter) {
-    //   // for each filter, use WHERE or AND as appropriate, add to clause, add to args list, & note index++ for $n
-    //   whereClause += argIndex == 1 ? "WHERE " : "AND ";
-    //   whereClause += `name ILIKE $${argIndex} `;
-    //   args.push(`%${nameFilter}%`);
-    //   argIndex++;
-    // }
-    // if (minEmployees) {
-    //   whereClause += argIndex == 1 ? "WHERE " : "AND ";
-    //   whereClause += `num_employees >= $${argIndex} `;
-    //   args.push(minEmployees);
-    //   argIndex++;
-    // }
-    // if (maxEmployees) {
-    //   whereClause += argIndex == 1 ? "WHERE " : "AND ";
-    //   whereClause += `num_employees <= $${argIndex} `;
-    //   args.push(maxEmployees);
-    //   argIndex++;
-    // }
+    if (titleFilter) {
+      // for each filter, use WHERE or AND as appropriate, add to clause, add to args list, & note index++ for $n
+      whereClause += argIndex == 1 ? "WHERE " : "AND ";
+      whereClause += `title ILIKE $${argIndex} `;
+      args.push(`%${titleFilter}%`);
+      argIndex++;
+    }
+    if (minSalary) {
+      whereClause += argIndex == 1 ? "WHERE " : "AND ";
+      whereClause += `salary >= $${argIndex} `;
+      args.push(`${minSalary}`);
+      argIndex++;
+    }
+    if (hasEquity) {
+      whereClause += argIndex == 1 ? "WHERE " : "AND ";
+      whereClause += `equity > 0 `;
+    }
     // console.log("clause: ", whereClause);
     // console.log("args:", args);
     const jobsRes = await db.query(
@@ -106,19 +94,8 @@ class Job {
     return job;
   }
 
-  /** Update job data with `data`.
-   *
-   * This is a "partial update" --- it's fine if data doesn't contain all the
-   * fields; this only changes provided ones.
-   *
-   * Data can include: {name, description, numEmployees, logoUrl}
-   *
-   * Returns {handle, name, description, numEmployees, logoUrl}
-   *
-   * Throws NotFoundError if not found.
-   */
-
   static async update(id, data) {
+    console.log("id: ", id, "data", data);
     const dataToChange = { ...data }; // copy object, so can remove some items
     delete dataToChange.companyHandle; // don't allow to change company handle
 

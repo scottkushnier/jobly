@@ -42,40 +42,48 @@ router.post("/", ensureLoggedInAsAdmin, async function (req, res, next) {
  *   { jobs: [ { id, name, description, numEmployees, logoUrl }, ...] }
  *
  * Can filter on provided search filters:
- * - minEmployees
- * - maxEmployees
- * - nameLike (will find case-insensitive, partial matches)
+ * - substring for title
+ * - minimum salary
+ * - whether job benefits include market equity
  *
  * Authorization required: none
  */
 
-// function checkJobGetQuery(queries) {
-//   for (let query of Object.keys(queries)) {
-//     // console.log("checking: ", query);
-//     if (query != "maxEmployees" && query != "minEmployees" && query != "name") {
-//       return { error: `bad query: ${query}` };
-//     }
-//     if (query == "minEmployees" || query == "maxEmployees") {
-//       // console.log(`${query} (${queries[query]})`);
-//       if (isNaN(queries[query])) {
-//         return { error: `${query} (${queries[query]}) must be a number` };
-//       }
-//     }
-//   }
-//   return null;
-// }
+function checkJobGetQuery(queries) {
+  for (let query of Object.keys(queries)) {
+    // console.log("checking: ", query);
+    if (
+      query != "titleFilter" &&
+      query != "minSalary" &&
+      query != "hasEquity"
+    ) {
+      return { error: `bad query: ${query}` };
+    }
+    if (query == "minSalary") {
+      // console.log(`${query} (${queries[query]})`);
+      if (isNaN(queries[query])) {
+        return { error: `${query} (${queries[query]}) must be a number` };
+      }
+    }
+  }
+  return null;
+}
 
 router.get("/", async function (req, res, next) {
   try {
     // console.log(Object.keys(req.query));
-    // const checkResult = checkJobGetQuery(req.query);
-    // if (checkResult) {
-    //   throw new BadRequestError(checkResult.error);
-    // }
+    const checkResult = checkJobGetQuery(req.query);
+    if (checkResult) {
+      throw new BadRequestError(checkResult.error);
+    }
     // console.log("job name: ", req.query.name);
     // console.log("min: ", req.query.minEmployees);
     // console.log("max: ", req.query.maxEmployees);
-    const jobs = await Job.findAll();
+    const jobs = await Job.findAll(
+      req.query.titleFilter,
+      req.query.minSalary,
+      req.query.hasEquity
+    );
     console.log("len: ", jobs.length);
     return res.json({ jobs });
   } catch (err) {
