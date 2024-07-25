@@ -7,6 +7,7 @@ const {
 } = require("../expressError");
 const db = require("../db.js");
 const User = require("./user.js");
+
 const {
   commonBeforeAll,
   commonBeforeEach,
@@ -134,12 +135,14 @@ describe("findAll", function () {
 describe("get", function () {
   test("works", async function () {
     let user = await User.get("u1");
+    // console.log("job ids: ", jobIds);
     expect(user).toEqual({
       username: "u1",
       firstName: "U1F",
       lastName: "U1L",
       email: "u1@email.com",
       isAdmin: false,
+      jobs: [1, 2],
     });
   });
 
@@ -181,8 +184,9 @@ describe("update", function () {
     });
     expect(user.firstName).toEqual(newFirstName);
     expect(user.email).toEqual(newEmail);
-    delete user.firstName;
+    delete user.firstName; // remove changed fields, job data, & make sure all else is same
     delete user.email;
+    delete origUser.jobs;
     delete origUser.firstName;
     delete origUser.email;
     expect(user).toEqual(origUser);

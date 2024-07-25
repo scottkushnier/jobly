@@ -46,6 +46,21 @@ router.post("/", ensureLoggedInAsAdmin, async function (req, res, next) {
   }
 });
 
+router.post(
+  "/:username/jobs/:jobid",
+  ensureUserRights,
+  async function (req, res, next) {
+    try {
+      const jobId = req.params.jobid;
+      console.log("jobid: ", jobId);
+      User.apply(req.params.username, jobId);
+      return res.status(201).json({ applied: jobId });
+    } catch (err) {
+      return next(err);
+    }
+  }
+);
+
 /** GET / => { users: [ {username, firstName, lastName, email }, ... ] }
  *
  * Returns list of all users.
