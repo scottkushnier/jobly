@@ -41,9 +41,9 @@ class Job {
     let args = [];
     let argIndex = 1;
 
-    // build WHERE clause for filtering of results
+    // SDK - build WHERE clause for filtering of results
     if (titleFilter) {
-      // for each filter, use WHERE or AND as appropriate, add to clause, add to args list, & note index++ for $n
+      // SDK - for each filter, use WHERE or AND as appropriate, add to clause, add to args list, & note index++ for $n
       whereClause += argIndex == 1 ? "WHERE " : "AND ";
       whereClause += `title ILIKE $${argIndex} `;
       args.push(`%${titleFilter}%`);
@@ -61,6 +61,7 @@ class Job {
     }
     // console.log("clause: ", whereClause);
     // console.log("args:", args);
+    // SDK - filter jobs by criteria
     const jobsRes = await db.query(
       `SELECT id, title, salary, equity, company_handle AS "companyHandle"
              FROM jobs

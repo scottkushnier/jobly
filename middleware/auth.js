@@ -44,7 +44,8 @@ function ensureLoggedIn(req, res, next) {
   }
 }
 
-// Middleware to use if must be logged in a user with Admin privileges
+// SDK
+// Middleware to use if must be logged in as user with Admin privileges
 function ensureLoggedInAsAdmin(req, res, next) {
   try {
     // console.log("admin?: ", res.locals.user.username, res.locals.user.isAdmin);
@@ -56,6 +57,7 @@ function ensureLoggedInAsAdmin(req, res, next) {
   }
 }
 
+// SDK
 // Middleware to use if trying to change my own data (i.e. logged-in user matches req.params) or logged-in user is an admin
 function ensureUserRights(req, res, next) {
   try {

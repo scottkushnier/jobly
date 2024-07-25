@@ -222,6 +222,8 @@ describe("update", function () {
     ]);
   });
 
+  // SDK - check just changing some fields
+
   test("works, just change company name", async function () {
     const newName = "ABC Company";
     const origCompany = await Company.get("c1");

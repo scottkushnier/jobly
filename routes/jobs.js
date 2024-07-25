@@ -72,6 +72,7 @@ function checkJobGetQuery(queries) {
 router.get("/", async function (req, res, next) {
   try {
     // console.log(Object.keys(req.query));
+    // SDK - check if filtering by just valid filters
     const checkResult = checkJobGetQuery(req.query);
     if (checkResult) {
       throw new BadRequestError(checkResult.error);

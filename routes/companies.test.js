@@ -104,6 +104,8 @@ describe("GET /companies", function () {
     });
   });
 
+  // SDK - check for various filters
+
   test("filter name", async function () {
     const resp = await request(app).get("/companies?name=2");
     expect(resp.body).toEqual({
@@ -171,7 +173,7 @@ describe("GET /companies/:handle", function () {
         name: "C1",
         description: "Desc1",
         numEmployees: 1,
-        logoUrl: "http://c1.img",
+        logoUrl: "http://c1.img", // SDK - check jobs on return too
         jobs: [
           {
             equity: "0",
@@ -199,7 +201,7 @@ describe("GET /companies/:handle", function () {
         description: "Desc2",
         numEmployees: 2,
         logoUrl: "http://c2.img",
-        jobs: [],
+        jobs: [], // SDK
       },
     });
   });
@@ -211,6 +213,8 @@ describe("GET /companies/:handle", function () {
 });
 
 /************************************** PATCH /companies/:handle */
+
+// SDK - test for just changing some fields
 
 describe("PATCH /companies/:handle", function () {
   test("works for just company name", async function () {
@@ -231,6 +235,7 @@ describe("PATCH /companies/:handle", function () {
     });
   });
 
+  // SDK
   test("works for just desc & num employees", async function () {
     const resp = await request(app)
       .patch(`/companies/c1`)

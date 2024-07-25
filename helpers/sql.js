@@ -1,5 +1,6 @@
 const { BadRequestError } = require("../expressError");
 
+// SDK - documentation
 // Allows one to update only certain fields in a database object.
 // .. rather than needing to call with data for every single field - filled with mostly the same data)
 //     'dataToUpdate' is an object containing the data to be changed (ex. {age: 25, isAdmin: true})

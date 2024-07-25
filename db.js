@@ -19,6 +19,6 @@ if (process.env.NODE_ENV === "production") {
 }
 
 db.connect();
-db.password = "postgres";
+db.password = "postgres"; // SDK
 
 module.exports = db;

@@ -46,13 +46,14 @@ router.post("/", ensureLoggedInAsAdmin, async function (req, res, next) {
   }
 });
 
+// SDK - route for user to apply for job
 router.post(
   "/:username/jobs/:jobid",
   ensureUserRights,
   async function (req, res, next) {
     try {
       const jobId = req.params.jobid;
-      console.log("jobid: ", jobId);
+      // console.log("jobid: ", jobId);
       User.apply(req.params.username, jobId);
       return res.status(201).json({ applied: jobId });
     } catch (err) {

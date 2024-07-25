@@ -12,7 +12,7 @@ async function commonBeforeAll() {
   // noinspection SqlWithoutWhere
   await db.query("DELETE FROM companies");
 
-  // reset jobs autoinc for ids for testing purposes
+  // SDK - reset jobs autoinc for ids for testing purposes
   await db.query("ALTER SEQUENCE jobs_id_seq RESTART WITH 1");
 
   await Company.create({
@@ -80,7 +80,7 @@ async function commonBeforeAll() {
     equity: 0.02,
     companyHandle: "c3",
   });
-  await User.apply("u1", 2);
+  await User.apply("u1", 2); // SDK - insert some job applications
   await User.apply("u1", 3);
 }
 

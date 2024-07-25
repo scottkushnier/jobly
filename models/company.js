@@ -44,15 +44,16 @@ class Company {
    * Returns [{ handle, name, description, numEmployees, logoUrl }, ...]
    * */
 
-  static async findAll(
+  static async findAll( // SDK - (optional) args for filtering
     nameFilter = null,
     minEmployees = null,
     maxEmployees = null
   ) {
+    // SDK - to accumulate data for SQL query string
     let whereClause = "";
     let args = [];
     let argIndex = 1;
-    // check that Max > Min
+    // SDK - check that Max > Min
     if (
       minEmployees != null &&
       maxEmployees != null &&
@@ -62,9 +63,9 @@ class Company {
         `Filter minimum (${minEmployees}) specified is greater than maximum (${maxEmployees})`
       );
     }
-    // build WHERE clause for filtering of results
+    // SDK - build WHERE clause for filtering of results
     if (nameFilter) {
-      // for each filter, use WHERE or AND as appropriate, add to clause, add to args list, & note index++ for $n
+      // SDK - for each filter, use WHERE or AND as appropriate, add to clause, add to args list, & note index++ for $n
       whereClause += argIndex == 1 ? "WHERE " : "AND ";
       whereClause += `name ILIKE $${argIndex} `;
       args.push(`%${nameFilter}%`);
@@ -84,6 +85,7 @@ class Company {
     }
     // console.log("clause: ", whereClause);
     // console.log("args:", args);
+    // SDK - insert filtering clauses here
     const companiesRes = await db.query(
       `SELECT handle,
                   name,
@@ -122,6 +124,7 @@ class Company {
 
     if (!company) throw new NotFoundError(`No company: ${handle}`);
 
+    // SDK - collect jobs & associate with company
     const jobRes = await db.query(
       `SELECT id, 
           title,

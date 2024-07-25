@@ -138,6 +138,7 @@ class User {
 
     if (!user) throw new NotFoundError(`No user: ${username}`);
 
+    // SDK - collect jobs applied for by user
     const jobsRes = await db.query(
       `SELECT job_id FROM applications WHERE username = $1`,
       [username]
@@ -209,9 +210,11 @@ class User {
     if (!user) throw new NotFoundError(`No user: ${username}`);
   }
 
+  // SDK - record application for a job by a user
   static async apply(username, jobId) {
     // console.log(username, "applying for :", username, jobId);
     try {
+      // SDK - check if already applied
       const duplicateCheck = await db.query(
         `SELECT *
            FROM applications

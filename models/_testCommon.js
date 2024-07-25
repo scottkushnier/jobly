@@ -11,7 +11,7 @@ async function commonBeforeAll() {
   // noinspection SqlWithoutWhere
   await db.query("DELETE FROM jobs");
 
-  // reset jobs autoinc for ids for testing purposes
+  // SDK - reset jobs autoinc for ids for testing purposes
   await db.query("ALTER SEQUENCE jobs_id_seq RESTART WITH 1");
 
   await db.query(`
@@ -20,13 +20,14 @@ async function commonBeforeAll() {
            ('c2', 'C2', 2, 'Desc2', 'http://c2.img'),
            ('c3', 'C3', 3, 'Desc3', 'http://c3.img')`);
 
+  // SDK - add some jobs for testing
   const jobsResult = await db.query(`
             INSERT INTO jobs (title, salary, equity, company_handle)
             VALUES ('title-1', 50000, 0, 'c1'),
                    ('title-2', 60000, 0.01, 'c1'),
                    ('title-3', 70000, 0.02, 'c2')
                    RETURNING id`);
-  const jobIds = jobsResult.rows.map((job) => job.id); // save ids for use later in setting up applications table
+  const jobIds = jobsResult.rows.map((job) => job.id); // SDK - save ids for use later in setting up applications table
   // console.log("ids: ", jobIds);
 
   await db.query(
@@ -45,6 +46,7 @@ async function commonBeforeAll() {
     ]
   );
 
+  // SDK - add some applications to jobs
   await db.query(`
     INSERT INTO applications (username, job_id)
     VALUES ('u1', ${jobIds[0]}),

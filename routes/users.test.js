@@ -246,6 +246,7 @@ describe("PATCH /users/:username", () => {
     });
   });
 
+  // SDK - test just changing some fields
   describe("PATCH /users/:username", () => {
     test("works for users, change firstname & email", async function () {
       const resp = await request(app)

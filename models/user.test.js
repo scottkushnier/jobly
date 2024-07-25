@@ -142,7 +142,7 @@ describe("get", function () {
       lastName: "U1L",
       email: "u1@email.com",
       isAdmin: false,
-      jobs: [1, 2],
+      jobs: [1, 2], // SDK - check jobs result
     });
   });
 
@@ -174,6 +174,7 @@ describe("update", function () {
     });
   });
 
+  // SDK - check updating just certain fields
   test("works, change just firstName & email", async function () {
     const origUser = await User.get("u1");
     const newFirstName = "Smedly";

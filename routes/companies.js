@@ -68,6 +68,7 @@ function checkCompanyGetQuery(queries) {
 router.get("/", async function (req, res, next) {
   try {
     // console.log(Object.keys(req.query));
+    // SDK - check if query using only legal filters
     const checkResult = checkCompanyGetQuery(req.query);
     if (checkResult) {
       throw new BadRequestError(checkResult.error);
