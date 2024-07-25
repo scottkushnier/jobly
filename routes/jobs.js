@@ -84,7 +84,7 @@ router.get("/", async function (req, res, next) {
       req.query.minSalary,
       req.query.hasEquity
     );
-    console.log("len: ", jobs.length);
+    // console.log("len: ", jobs.length);
     return res.json({ jobs });
   } catch (err) {
     return next(err);

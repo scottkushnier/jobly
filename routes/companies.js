@@ -72,15 +72,15 @@ router.get("/", async function (req, res, next) {
     if (checkResult) {
       throw new BadRequestError(checkResult.error);
     }
-    console.log("name: ", req.query.name);
-    console.log("min: ", req.query.minEmployees);
-    console.log("max: ", req.query.maxEmployees);
+    // console.log("name: ", req.query.name);
+    // console.log("min: ", req.query.minEmployees);
+    // console.log("max: ", req.query.maxEmployees);
     const companies = await Company.findAll(
       req.query.name,
       +req.query.minEmployees, // coerce from url string (e.g. the string: "7" in "&maxEmployees=7") to a number
       +req.query.maxEmployees // here too
     );
-    console.log("len: ", companies.length);
+    // console.log("len: ", companies.length);
     return res.json({ companies });
   } catch (err) {
     return next(err);

@@ -79,7 +79,7 @@ class Job {
    **/
 
   static async get(id) {
-    console.log("id: ", id);
+    // console.log("id: ", id);
     const jobRes = await db.query(
       `SELECT id, title, salary, equity, company_handle AS "companyHandle"
              FROM jobs
@@ -95,7 +95,7 @@ class Job {
   }
 
   static async update(id, data) {
-    console.log("id: ", id, "data", data);
+    // console.log("id: ", id, "data", data);
     const dataToChange = { ...data }; // copy object, so can remove some items
     delete dataToChange.companyHandle; // don't allow to change company handle
 
@@ -112,7 +112,7 @@ class Job {
     const result = await db.query(querySql, [...values, id]);
     const job = result.rows[0];
 
-    console.log("job for update: ", job);
+    // console.log("job for update: ", job);
 
     if (!job) throw new NotFoundError(`No job: ${id}`);
 

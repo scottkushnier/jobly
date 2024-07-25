@@ -210,7 +210,7 @@ class User {
   }
 
   static async apply(username, jobId) {
-    console.log(username, "applying for :", username, jobId);
+    // console.log(username, "applying for :", username, jobId);
     try {
       const duplicateCheck = await db.query(
         `SELECT *

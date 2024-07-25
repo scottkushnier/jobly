@@ -142,9 +142,9 @@ describe("findAll", function () {
 describe("get", function () {
   test("works", async function () {
     let jobs = await Job.findAll();
-    console.log("jobs: ", jobs);
+    // console.log("jobs: ", jobs);
     const jobId = jobs[1].id;
-    console.log("jobId: ", jobId);
+    // console.log("jobId: ", jobId);
     let job = await Job.get(jobId);
     expect(job).toEqual({
       id: jobId,
@@ -177,16 +177,16 @@ describe("update", function () {
 
   test("works", async function () {
     let jobs = await Job.findAll();
-    console.log("jobs: ", jobs);
+    // console.log("jobs: ", jobs);
     const jobId = jobs[0].id;
 
     const job = await Job.update(jobId, updateData);
 
-    console.log("job returned: ", job);
-    console.log("expected: ", {
-      id: expect.any(Number),
-      ...updateData,
-    });
+    // console.log("job returned: ", job);
+    // console.log("expected: ", {
+    //   id: expect.any(Number),
+    //   ...updateData,
+    // });
     expect(job).toEqual({
       id: expect.any(Number),
       ...updateData,
@@ -247,7 +247,7 @@ describe("update", function () {
 describe("remove", function () {
   test("works", async function () {
     let jobs = await Job.findAll();
-    console.log("jobs: ", jobs);
+    // console.log("jobs: ", jobs);
     const jobId = jobs[2].id;
 
     await Job.remove(jobId);
