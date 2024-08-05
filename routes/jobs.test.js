@@ -48,28 +48,6 @@ describe("POST /jobs", function () {
       job: newJob,
     });
   });
-
-  //   test("bad request with missing data", async function () {
-  //     const resp = await request(app)
-  //       .post("/jobs")
-  //       .send({
-  //         handle: "new",
-  //         numEmployees: 10,
-  //       })
-  //       .set("authorization", `Bearer ${u2Token}`);
-  //     expect(resp.statusCode).toEqual(400);
-  //   });
-
-  //   test("bad request with invalid data", async function () {
-  //     const resp = await request(app)
-  //       .post("/jobs")
-  //       .send({
-  //         ...newJob,
-  //         logoUrl: "not-a-url",
-  //       })
-  //       .set("authorization", `Bearer ${u2Token}`);
-  //     expect(resp.statusCode).toEqual(400);
-  //   });
 });
 
 /************************************** GET /jobs */
@@ -175,17 +153,6 @@ describe("GET /jobs", function () {
     const resp = await request(app).get("/jobs?apples=6");
     expect(resp.statusCode).toEqual(400);
   });
-
-  // test("fails: test next() handler", async function () {
-  //   // there's no normal failure event which will cause this route to fail ---
-  //   // thus making it hard to test that the error-handler works with it. This
-  //   // should cause an error, all right :)
-  //   await db.query("DROP TABLE jobs CASCADE");
-  //   const resp = await request(app)
-  //     .get("/jobs")
-  //     .set("authorization", `Bearer ${u1Token}`);
-  //   expect(resp.statusCode).toEqual(500);
-  // });
 });
 
 /************************************** GET /jobs/:id */
@@ -252,25 +219,6 @@ describe("PATCH /jobs/:id", function () {
       },
     });
   });
-
-  //   test("works for just desc & num employees", async function () {
-  //     const resp = await request(app)
-  //       .patch(`/jobs/c1`)
-  //       .send({
-  //         description: "a terrific place to work",
-  //         numEmployees: 98,
-  //       })
-  //       .set("authorization", `Bearer ${u1Token}`);
-  //     expect(resp.body).toEqual({
-  //       job: {
-  //         handle: "c1",
-  //         name: "C1",
-  //         description: "a terrific place to work",
-  //         numEmployees: 98,
-  //         logoUrl: "http://c1.img",
-  //       },
-  //     });
-  //   });
 
   test("unauth for anon", async function () {
     const resp = await request(app).patch(`/jobs/c1`).send({

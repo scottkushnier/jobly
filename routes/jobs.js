@@ -27,7 +27,7 @@ router.post("/", ensureLoggedInAsAdmin, async function (req, res, next) {
   try {
     const validator = jsonschema.validate(req.body, jobNewSchema);
     if (!validator.valid) {
-      console.log("not valid post data");
+      // console.log("not valid post data");
       const errs = validator.errors.map((e) => e.stack);
       throw new BadRequestError(errs);
     }

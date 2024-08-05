@@ -193,36 +193,6 @@ describe("update", function () {
     });
   });
 
-  //   test("works: null fields", async function () {
-  //     const updateDataSetNulls = {
-  //       name: "New",
-  //       description: "New Description",
-  //       numEmployees: null,
-  //       logoUrl: null,
-  //     };
-
-  //     let job = await job.update("c1", updateDataSetNulls);
-  //     expect(job).toEqual({
-  //       handle: "c1",
-  //       ...updateDataSetNulls,
-  //     });
-
-  //     const result = await db.query(
-  //       `SELECT handle, name, description, num_employees, logo_url
-  //            FROM jobs
-  //            WHERE handle = 'c1'`
-  //     );
-  //     expect(result.rows).toEqual([
-  //       {
-  //         handle: "c1",
-  //         name: "New",
-  //         description: "New Description",
-  //         num_employees: null,
-  //         logo_url: null,
-  //       },
-  //     ]);
-  //   });
-
   test("not found if no such job", async function () {
     try {
       await Job.update(0, updateData);
