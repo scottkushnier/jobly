@@ -3,8 +3,8 @@ const bcrypt = require("bcrypt");
 const db = require("../db.js");
 const { BCRYPT_WORK_FACTOR } = require("../config");
 
+// need function to return job IDs for testing purposes, ow won't know what IDs to check against
 let jobIds;
-
 function jobIdFn() {
   console.log("calling jobIds");
   return jobIds;
