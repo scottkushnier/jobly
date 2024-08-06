@@ -13,6 +13,7 @@ const {
   commonBeforeEach,
   commonAfterEach,
   commonAfterAll,
+  jobIdFn,
 } = require("./_testCommon");
 
 beforeAll(commonBeforeAll);
@@ -135,14 +136,15 @@ describe("findAll", function () {
 describe("get", function () {
   test("works", async function () {
     let user = await User.get("u1");
-    // console.log("job ids: ", jobIds);
+    const jobIds = jobIdFn();
+    // console.log("job ids: ", jobIdFn());
     expect(user).toEqual({
       username: "u1",
       firstName: "U1F",
       lastName: "U1L",
       email: "u1@email.com",
       isAdmin: false,
-      jobs: [1, 2], // SDK - check jobs result
+      jobs: [jobIds[0], jobIds[1]], // SDK - check jobs result
     });
   });
 

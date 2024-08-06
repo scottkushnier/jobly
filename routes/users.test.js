@@ -5,6 +5,7 @@ const request = require("supertest");
 const db = require("../db.js");
 const app = require("../app");
 const User = require("../models/user");
+const Job = require("../models/job");
 
 const {
   commonBeforeAll,
@@ -166,6 +167,8 @@ describe("GET /users/:username", function () {
     const resp = await request(app)
       .get(`/users/u1`)
       .set("authorization", `Bearer ${u1Token}`);
+    const jobs = await Job.findAll(); // SDK - collect jobs cause will need ids for testing applications
+    // console.log("jobs: ", jobs);
     expect(resp.body).toEqual({
       user: {
         username: "u1",
@@ -173,7 +176,7 @@ describe("GET /users/:username", function () {
         lastName: "U1L",
         email: "user1@user.com",
         isAdmin: false,
-        jobs: [2, 3],
+        jobs: [jobs[1].id, jobs[2].id],
       },
     });
   });
@@ -182,6 +185,7 @@ describe("GET /users/:username", function () {
     const resp = await request(app)
       .get(`/users/u1`)
       .set("authorization", `Bearer ${u2Token}`);
+    const jobs = await Job.findAll(); // SDK - collect jobs cause will need ids for testing applications
     expect(resp.body).toEqual({
       user: {
         username: "u1",
@@ -189,7 +193,7 @@ describe("GET /users/:username", function () {
         lastName: "U1L",
         email: "user1@user.com",
         isAdmin: false,
-        jobs: [2, 3],
+        jobs: [jobs[1].id, jobs[2].id],
       },
     });
   });

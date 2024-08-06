@@ -13,7 +13,7 @@ async function commonBeforeAll() {
   await db.query("DELETE FROM companies");
 
   // SDK - reset jobs autoinc for ids for testing purposes
-  await db.query("ALTER SEQUENCE jobs_id_seq RESTART WITH 1");
+  // await db.query("ALTER SEQUENCE jobs_id_seq RESTART WITH 1");
 
   await Company.create({
     handle: "c1",
@@ -62,26 +62,27 @@ async function commonBeforeAll() {
     isAdmin: false,
   });
 
-  await Job.create({
+  const job1 = await Job.create({
     title: "title-1",
     salary: 50000,
     equity: 0,
     companyHandle: "c1",
   });
-  await Job.create({
+  const job2 = await Job.create({
     title: "title-2",
     salary: 60000,
     equity: 0.01,
     companyHandle: "c1",
   });
-  await Job.create({
+  const job3 = await Job.create({
     title: "title-3",
     salary: 70000,
     equity: 0.02,
     companyHandle: "c3",
   });
-  await User.apply("u1", 2); // SDK - insert some job applications
-  await User.apply("u1", 3);
+  // console.log("job2: ", job2);
+  await User.apply("u1", job2.id); // SDK - insert some job applications
+  await User.apply("u1", job3.id);
 }
 
 async function commonBeforeEach() {

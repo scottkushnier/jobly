@@ -8,12 +8,15 @@ const {
   commonBeforeEach,
   commonAfterEach,
   commonAfterAll,
+  jobIdFn,
 } = require("./_testCommon");
 
 beforeAll(commonBeforeAll);
 beforeEach(commonBeforeEach);
 afterEach(commonAfterEach);
 afterAll(commonAfterAll);
+
+// console.log("job ids: ", jobIdFn());
 
 /************************************** create */
 
