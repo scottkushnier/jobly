@@ -30,8 +30,8 @@ describe("create", function () {
 
   test("works", async function () {
     let job = await Job.create(newjob);
-    delete job.id; // ignore resulting id as unpredictable
     job.equity += ""; // convert equity to string as that's how it's returned from pg (from NUMERIC type)
+    newjob.id = job.id; // copy over ID before check
     expect(job).toEqual(newjob);
 
     const result = await db.query(

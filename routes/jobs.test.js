@@ -41,7 +41,7 @@ describe("POST /jobs", function () {
       .post("/jobs")
       .send(newJob)
       .set("authorization", `Bearer ${u2Token}`); // an admin
-    delete resp.body.job.id; // remove id before try match
+    newJob.id = resp.body.job.id; // tack on id before match
     resp.body.job.equity = +resp.body.job.equity; // convert returned equity (string) back to number
     expect(resp.statusCode).toEqual(201);
     expect(resp.body).toEqual({
@@ -162,10 +162,10 @@ describe("GET /jobs/:id", function () {
     const jobs = (await request(app).get("/jobs")).body.jobs;
     const jobId = jobs[2].id;
     const resp = await request(app).get(`/jobs/${jobId}`);
-    delete resp.body.job.id; // remove id before try match
     resp.body.job.equity = +resp.body.job.equity; // convert returned equity (string) back to number
     expect(resp.body).toEqual({
       job: {
+        id: resp.body.job.id, // just copy over ID
         title: "title-3",
         salary: 70000,
         equity: 0.02,
@@ -178,10 +178,10 @@ describe("GET /jobs/:id", function () {
     const jobs = (await request(app).get("/jobs")).body.jobs;
     const jobId = jobs[1].id;
     const resp = await request(app).get(`/jobs/${jobId}`);
-    delete resp.body.job.id; // remove id before try match
     resp.body.job.equity = +resp.body.job.equity; // convert returned equity (string) back to number
     expect(resp.body).toEqual({
       job: {
+        id: resp.body.job.id, // just copy over ID
         title: "title-2",
         salary: 60000,
         equity: 0.01,
@@ -208,10 +208,10 @@ describe("PATCH /jobs/:id", function () {
         title: "even more important guy",
       })
       .set("authorization", `Bearer ${u2Token}`);
-    delete resp.body.job.id; // remove id before try match
     resp.body.job.equity = +resp.body.job.equity; // convert returned equity (string) back to number
     expect(resp.body).toEqual({
       job: {
+        id: resp.body.job.id, // just copy ID over
         title: "even more important guy",
         salary: 60000,
         equity: 0.01,
